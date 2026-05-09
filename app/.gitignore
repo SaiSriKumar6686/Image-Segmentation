@@ -1,0 +1,46 @@
+# Dependencies
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Model weights (too large for GitHub)
+weights/*.pth
+*.pth
+
+# Data (download separately)
+data/Training_Images/
+data/Ground_Truth/
+
+# Output artifacts
+outputs/
+*.png
+!screenshots/*.png
+!app/static/**
+
+# Old project files (archived)
+ProjectCode*.py
+ProjectCode*.txt
+sdlc.py
+sdlc_image_segmentation
+Documentation/
