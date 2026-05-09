@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-powered road image segmentation using UNet-ResNet34. Upload any road image and get instant pixel-level segmentation masks.">
+    <meta property="og:title" content="SegmentAI — Neural Image Segmentation">
+    <meta property="og:description" content="Real-time road scene segmentation powered by UNet-ResNet34 deep learning architecture.">
+    <meta property="og:type" content="website">
+    <title>SegmentAI — Neural Image Segmentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Ambient background particles -->
+    <div class="ambient-bg">
+        <div class="particle p1"></div>
+        <div class="particle p2"></div>
+        <div class="particle p3"></div>
+        <div class="particle p4"></div>
+        <div class="particle p5"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-brand">
+            <div class="brand-icon">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <rect x="2" y="2" width="10" height="10" rx="2" fill="#a0a0a0"/>
+                    <rect x="16" y="2" width="10" height="10" rx="2" fill="#707070"/>
+                    <rect x="2" y="16" width="10" height="10" rx="2" fill="#585858"/>
+                    <rect x="16" y="16" width="10" height="10" rx="2" fill="#909090" opacity="0.6"/>
+                </svg>
+            </div>
+            <span class="brand-text">Segment<span class="brand-highlight">AI</span></span>
+        </div>
+        <div class="nav-links">
+            <a href="#features" class="nav-link">Features</a>
+            <a href="#demo" class="nav-link">Try It</a>
+            <a href="#architecture" class="nav-link">Architecture</a>
+            <a href="https://github.com/SaiSriKumar6686/Image-Segmentation" class="nav-link nav-github" target="_blank" rel="noopener">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                GitHub
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                UNet · ResNet34 · PyTorch
+            </div>
+            <h1 class="hero-title">
+                Neural Image<br>
+                <span class="title-gradient">Segmentation</span>
+            </h1>
+            <p class="hero-subtitle">
+                Pixel-level road scene understanding powered by deep learning.
+                Upload any road image and watch our UNet-ResNet34 model segment it in real-time.
+            </p>
+            <div class="hero-actions">
+                <a href="#demo" class="btn btn-primary" id="hero-cta">
+                    <span>Try Segmentation</span>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <a href="#architecture" class="btn btn-secondary">
+                    <span>View Architecture</span>
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-value">290+</span>
+                    <span class="stat-label">Training Samples</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-value">256×256</span>
+                    <span class="stat-label">Input Resolution</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-value">ResNet34</span>
+                    <span class="stat-label">Encoder Backbone</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="visual-card">
+                <div class="card-glow"></div>
+                <div class="visual-grid">
+                    <div class="grid-cell input-cell">
+                        <span class="cell-label">Input</span>
+                        <div class="cell-placeholder">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="4" y="8" width="40" height="32" rx="4" stroke="#666" stroke-width="2"/><circle cx="16" cy="20" r="4" stroke="#888" stroke-width="1.5"/><path d="M4 32l12-10 8 6 10-12 10 8" stroke="#777" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </div>
+                    </div>
+                    <div class="grid-arrow">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <div class="grid-cell output-cell">
+                        <span class="cell-label">Segmented</span>
+                        <div class="cell-placeholder segmented">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="4" y="8" width="40" height="32" rx="4" stroke="#888" stroke-width="2"/><path d="M4 28c6-8 12-4 18-10s10-2 22-6" stroke="#aaa" stroke-width="2" fill="none"/><rect x="4" y="28" width="40" height="12" rx="0" fill="#666" opacity="0.3"/></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header">
+            <span class="section-tag">Capabilities</span>
+            <h2 class="section-title">Engineered for Precision</h2>
+            <p class="section-desc">A complete deep learning pipeline from data augmentation to real-time inference.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card" id="feature-unet">
+                <div class="feature-icon">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M4 16c0-6.627 5.373-12 12-12s12 5.373 12 12-5.373 12-12 12S4 22.627 4 16z" stroke="currentColor" stroke-width="2"/><path d="M16 8v16M8 16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                </div>
+                <h3>UNet Architecture</h3>
+                <p>Encoder-decoder with skip connections for precise spatial feature recovery and pixel-level classification.</p>
+            </div>
+            <div class="feature-card" id="feature-backbone">
+                <div class="feature-icon">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="4" y="4" width="8" height="8" rx="2" stroke="currentColor" stroke-width="2"/><rect x="20" y="4" width="8" height="8" rx="2" stroke="currentColor" stroke-width="2"/><rect x="4" y="20" width="8" height="8" rx="2" stroke="currentColor" stroke-width="2"/><rect x="20" y="20" width="8" height="8" rx="2" stroke="currentColor" stroke-width="2"/><path d="M12 8h8M12 24h8M8 12v8M24 12v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </div>
+                <h3>ResNet34 Backbone</h3>
+                <p>ImageNet-pretrained encoder enabling robust feature extraction through residual learning and transfer learning.</p>
+            </div>
+            <div class="feature-card" id="feature-loss">
+                <div class="feature-icon">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M4 24l6-8 4 4 6-10 8 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="24" r="2" fill="currentColor"/><circle cx="28" cy="16" r="2" fill="currentColor"/></svg>
+                </div>
+                <h3>Hybrid Loss Function</h3>
+                <p>Combined CrossEntropy + Dice loss for balanced optimization of both pixel accuracy and region overlap.</p>
+            </div>
+            <div class="feature-card" id="feature-augmentation">
+                <div class="feature-icon">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 4v4M16 24v4M4 16h4M24 16h4M7.5 7.5l2.8 2.8M21.7 21.7l2.8 2.8M7.5 24.5l2.8-2.8M21.7 10.3l2.8-2.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                </div>
+                <h3>Data Augmentation</h3>
+                <p>Albumentations pipeline with flips, rotations, color jitter, and Gaussian blur for robust generalization.</p>
+            </div>
+            <div class="feature-card" id="feature-metrics">
+                <div class="feature-icon">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="4" y="18" width="6" height="10" rx="1" stroke="currentColor" stroke-width="2"/><rect x="13" y="10" width="6" height="18" rx="1" stroke="currentColor" stroke-width="2"/><rect x="22" y="4" width="6" height="24" rx="1" stroke="currentColor" stroke-width="2"/></svg>
+                </div>
+                <h3>Comprehensive Metrics</h3>
+                <p>Evaluation suite with Dice coefficient, IoU, Precision, Recall, and Pixel Accuracy for thorough validation.</p>
+            </div>
+            <div class="feature-card" id="feature-realtime">
+                <div class="feature-icon">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="2"/><path d="M16 10v6l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <h3>Real-time Inference</h3>
+                <p>Flask-powered web API enabling instant segmentation with GPU acceleration and browser-based visualization.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section class="demo-section" id="demo">
+        <div class="section-header">
+            <span class="section-tag">Interactive Demo</span>
+            <h2 class="section-title">Try It Yourself</h2>
+            <p class="section-desc">Upload a road scene image and see the segmentation model in action.</p>
+        </div>
+
+        <div class="demo-container">
+            <!-- Upload Area -->
+            <div class="upload-zone" id="upload-zone">
+                <div class="upload-content" id="upload-content">
+                    <div class="upload-icon">
+                        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                            <rect x="8" y="12" width="40" height="32" rx="6" stroke="#666" stroke-width="2.5" stroke-dasharray="4 3"/>
+                            <path d="M28 22v12M22 28l6-6 6 6" stroke="#888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="upload-title">Drop your image here</h3>
+                    <p class="upload-hint">or click to browse · PNG, JPG, JPEG, BMP, WebP</p>
+                    <button class="btn btn-upload" id="upload-btn">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                        Select Image
+                    </button>
+                </div>
+                <div class="upload-preview" id="upload-preview" style="display: none;">
+                    <img id="preview-img" alt="Uploaded preview">
+                    <button class="btn-clear" id="clear-btn" title="Remove image">✕</button>
+                </div>
+                <input type="file" id="file-input" accept="image/*" hidden>
+            </div>
+
+            <!-- Segment Button -->
+            <div class="action-bar" id="action-bar" style="display: none;">
+                <button class="btn btn-primary btn-segment" id="segment-btn">
+                    <span class="btn-text">Run Segmentation</span>
+                    <div class="btn-loader" style="display: none;">
+                        <div class="loader-ring"></div>
+                        Processing...
+                    </div>
+                </button>
+            </div>
+
+            <!-- Results Panel -->
+            <div class="results-panel" id="results-panel" style="display: none;">
+                <div class="results-grid">
+                    <div class="result-card" id="result-original">
+                        <div class="result-header">
+                            <span class="result-tag">01</span>
+                            <h4>Original Image</h4>
+                        </div>
+                        <div class="result-image">
+                            <img id="result-original-img" alt="Original input">
+                        </div>
+                    </div>
+                    <div class="result-card" id="result-mask">
+                        <div class="result-header">
+                            <span class="result-tag">02</span>
+                            <h4>Segmentation Mask</h4>
+                        </div>
+                        <div class="result-image">
+                            <img id="result-mask-img" alt="Segmentation mask">
+                        </div>
+                    </div>
+                    <div class="result-card" id="result-overlay">
+                        <div class="result-header">
+                            <span class="result-tag">03</span>
+                            <h4>Overlay</h4>
+                        </div>
+                        <div class="result-image">
+                            <img id="result-overlay-img" alt="Segmented overlay">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Metrics -->
+                <div class="metrics-bar" id="metrics-bar">
+                    <div class="metric" id="metric-confidence">
+                        <span class="metric-value">—</span>
+                        <span class="metric-label">Confidence</span>
+                    </div>
+                    <div class="metric" id="metric-coverage">
+                        <span class="metric-value">—</span>
+                        <span class="metric-label">Coverage</span>
+                    </div>
+                    <div class="metric" id="metric-pixels">
+                        <span class="metric-value">—</span>
+                        <span class="metric-label">Segmented Px</span>
+                    </div>
+                    <div class="metric" id="metric-total">
+                        <span class="metric-value">—</span>
+                        <span class="metric-label">Total Px</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error display -->
+            <div class="error-banner" id="error-banner" style="display: none;">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M10 6v5M10 13.5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                <span id="error-text"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section class="architecture" id="architecture">
+        <div class="section-header">
+            <span class="section-tag">Under the Hood</span>
+            <h2 class="section-title">Model Architecture</h2>
+            <p class="section-desc">The UNet encoder-decoder with ResNet34 backbone and skip connections.</p>
+        </div>
+        <div class="arch-diagram">
+            <div class="arch-flow">
+                <div class="arch-node arch-input">
+                    <span class="arch-label">Input Image</span>
+                    <span class="arch-detail">3 × 256 × 256</span>
+                </div>
+                <div class="arch-connector">→</div>
+                <div class="arch-block">
+                    <span class="arch-block-title">Encoder</span>
+                    <div class="arch-layers">
+                        <span class="arch-layer">Conv Block 1 · 64</span>
+                        <span class="arch-layer">Conv Block 2 · 128</span>
+                        <span class="arch-layer">Conv Block 3 · 256</span>
+                        <span class="arch-layer">Conv Block 4 · 512</span>
+                    </div>
+                    <span class="arch-detail">ResNet34 Pretrained</span>
+                </div>
+                <div class="arch-connector">→</div>
+                <div class="arch-node arch-bottleneck">
+                    <span class="arch-label">Bottleneck</span>
+                    <span class="arch-detail">512 channels</span>
+                </div>
+                <div class="arch-connector">→</div>
+                <div class="arch-block">
+                    <span class="arch-block-title">Decoder</span>
+                    <div class="arch-layers">
+                        <span class="arch-layer">UpConv + Skip · 256</span>
+                        <span class="arch-layer">UpConv + Skip · 128</span>
+                        <span class="arch-layer">UpConv + Skip · 64</span>
+                        <span class="arch-layer">UpConv + Skip · 32</span>
+                    </div>
+                    <span class="arch-detail">Transposed Convolutions</span>
+                </div>
+                <div class="arch-connector">→</div>
+                <div class="arch-node arch-output">
+                    <span class="arch-label">Output Mask</span>
+                    <span class="arch-detail">2 × 256 × 256</span>
+                </div>
+            </div>
+            <div class="arch-skip-label">
+                <svg width="200" height="24" viewBox="0 0 200 24"><path d="M10 20 C10 4, 190 4, 190 20" stroke="#555" stroke-width="1.5" fill="none" stroke-dasharray="4 3"/><text x="100" y="10" text-anchor="middle" fill="#777" font-size="11" font-family="Inter">Skip Connections</text></svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="tech-stack" id="tech-stack">
+        <div class="section-header">
+            <span class="section-tag">Built With</span>
+            <h2 class="section-title">Technology Stack</h2>
+        </div>
+        <div class="tech-grid">
+            <div class="tech-item"><span class="tech-name">Python</span><span class="tech-ver">3.10+</span></div>
+            <div class="tech-item"><span class="tech-name">PyTorch</span><span class="tech-ver">2.x</span></div>
+            <div class="tech-item"><span class="tech-name">SMP</span><span class="tech-ver">Segmentation Models</span></div>
+            <div class="tech-item"><span class="tech-name">Flask</span><span class="tech-ver">Web API</span></div>
+            <div class="tech-item"><span class="tech-name">OpenCV</span><span class="tech-ver">Image Processing</span></div>
+            <div class="tech-item"><span class="tech-name">Albumentations</span><span class="tech-ver">Augmentation</span></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="brand-text">Segment<span class="brand-highlight">AI</span></span>
+                <p>Road scene segmentation with deep learning.</p>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/SaiSriKumar6686/Image-Segmentation" target="_blank" rel="noopener">GitHub Repository</a>
+                <a href="#demo">Try Demo</a>
+                <a href="#architecture">Architecture</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 SegmentAI · Built by Sai Sri Kumar</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
