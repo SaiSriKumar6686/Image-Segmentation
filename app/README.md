@@ -49,7 +49,7 @@ The model was trained on **290 paired road images** with corresponding ground tr
 │        ▼                                         │                 │
 │   ┌─────────┐     Skip Connections      ┌──────────────┐           │
 │   │ Encoder │ ──────────────────────►   │   Decoder    │           │
-│   │(ResNet34)│                           │  (UpConv +   │          │
+│   │(ResNet34)│                          │  (UpConv +   │           │
 │   │         │                           │   Concat)    │           │
 │   │ Block 1 │ ─────────────────────►    │  UpBlock 4   │           │
 │   │  64 ch  │                           │   64 ch      │           │
