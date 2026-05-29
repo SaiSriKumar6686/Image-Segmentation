@@ -41,15 +41,15 @@ The model was trained on **290 paired road images** with corresponding ground tr
 ## 🏗 Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                        UNet Architecture                            │
-│                                                                     │
-│   Input (3×256×256)                        Output (2×256×256)       │
-│        │                                         ▲                  │
-│        ▼                                         │                  │
+┌────────────────────────────────────────────────────────────────────┐
+│                        UNet Architecture                           │
+│                                                                    │
+│   Input (3×256×256)                        Output (2×256×256)      │
+│        │                                         ▲                 │
+│        ▼                                         │                 │
 │   ┌─────────┐     Skip Connections      ┌──────────────┐           │
 │   │ Encoder │ ──────────────────────►   │   Decoder    │           │
-│   │(ResNet34)│                           │  (UpConv +   │           │
+│   │(ResNet34)│                           │  (UpConv +   │          │
 │   │         │                           │   Concat)    │           │
 │   │ Block 1 │ ─────────────────────►    │  UpBlock 4   │           │
 │   │  64 ch  │                           │   64 ch      │           │
@@ -63,10 +63,10 @@ The model was trained on **290 paired road images** with corresponding ground tr
 │   │ Block 4 │ ─────────────────────►    │  UpBlock 1   │           │
 │   │  512 ch │                           │   512 ch     │           │
 │   └────┬────┘                           └──────────────┘           │
-│        │                                         ▲                  │
+│        │                                         ▲                 │
 │        └──────► Bottleneck (512 ch) ─────────────┘                 │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
+│                                                                    │
+└────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Key Components
